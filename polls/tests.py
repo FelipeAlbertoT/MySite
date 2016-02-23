@@ -3,10 +3,11 @@ import datetime
 from django.utils import timezone
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.views import generic
-#from django import HttpResponse
+# from django.views import generic
+# from django import HttpResponse
 
 from .models import Question, Choice
+
 
 class QuestionMethodTests(TestCase):
 
@@ -37,12 +38,15 @@ class QuestionMethodTests(TestCase):
         recent_question = Question(pub_date=time)
         self.assertEqual(recent_question.was_published_recently(), True)
 
+
 def create_question(question_text, days):
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
 
+
 def create_choice(question, choice_text):
     return Choice.objects.create(question=question, choice_text=choice_text)
+
 
 class QuestionViewTests(TestCase):
     def test_index_view_with_no_questions(self):
@@ -91,6 +95,7 @@ class QuestionViewTests(TestCase):
         response = self.client.get(reverse("polls:index"))
         self.assertContains(response, 'No polls are available', status_code=200)
 
+
 class QuestionDetailTests(TestCase):
     def test_detail_view_with_a_future_question(self):
         future_question = create_question(question_text="Future question.", days=5)
@@ -101,6 +106,7 @@ class QuestionDetailTests(TestCase):
         past_question = create_question(question_text="Past question.", days=-5)
         response = self.client.get(reverse('polls:detail', args=(past_question.id,)))
         self.assertContains(response, past_question.question_text, status_code=200)
+
 
 class QuestionResultTests(TestCase):
     def test_result_view_with_a_future_question(self):
@@ -113,6 +119,6 @@ class QuestionResultTests(TestCase):
         response = self.client.get(reverse("polls:results", args=(past_question.id,)))
         self.assertContains(response, past_question.question_text, status_code=200)
 
-#def index(request):
-#    return HttpResponse("hello, World. You're at the polls index.")
+# def index(request):
+#     return HttpResponse("hello, World. You're at the polls index.")
 
