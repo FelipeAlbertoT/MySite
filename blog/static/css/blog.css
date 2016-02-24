@@ -66,3 +66,7 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #959595;
 }
+
+.comment {
+    margin: 20px 0px 20px 20px;
+}

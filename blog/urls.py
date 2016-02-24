@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^draft/$', views.post_draft_list, name='post_draft_list'),
     url(r'^post/(?P<pk>[0-9]+)/publish/$', views.post_publish, name='post_publish'),
     url(r'^post/(?P<pk>[0-9]+)/remove/$', views.post_remove, name='post_remove'),
+    url(r'^post/(?P<pk>[0-9]+)/comment/$', views.post_comment, name='post_comment'),
+    url(r'^comment/(?P<pk>[0-9]+)/approve/$', views.comment_approve, name='comment_approve'),
+    url(r'^comment/(?P<pk>[0-9]+)/remove/$', views.comment_remove, name='comment_remove'),
 ]
