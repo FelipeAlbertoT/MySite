@@ -1,6 +1,7 @@
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.test.client import Client
 
 from .models import Post
 
@@ -50,8 +51,13 @@ class PostIndexTests(TestCase):
 class PostDetailTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
+        password = 'top_secret'
         self.user = User.objects.create_user(
-            username='test', email='testb@test.com', password='top_secret')
+            username='test', email='testb@test.com', password=password)
+        self.user.is_staff = True
+        self.user.save()
+        self.client = Client()
+        self.client.login(username=self.user.username, password=password)
 
     def test_detail_with_draft(self):
         post = create_post('Draft post', 'Creating a draft post', self.user)
